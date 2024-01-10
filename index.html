@@ -38,9 +38,12 @@
   </head>
 
   <body>
-    <!-- navbar -->
     <div id="container">
+      <!-- navbar -->
       <div class="nav-container">
+        <div class="hamburger">
+          <img src="images/icons/hamburger-icon.svg" alt="hamburger" width="30px">
+        </div>
         <div class="left-container">
           <!-- logo -->
           <div class="logo-container">
@@ -61,9 +64,13 @@
           </div>
         </div>
         <div class="right-container">
+          <!-- mobile shortcut button -->
+          <div class="mobilebtn-container" title="Mobile Shortcut">
+            <img src="images/icons/mobile-icon.svg" alt="mobile shortcut" height="24px">
+          </div>
+          
           <!-- login button -->
           <div class="loginbtn-container">
-            <!-- <img src="images/icons/login-icon.svg" alt="login" height="24px"/> -->
             <span class="material-symbols-outlined login-icon">
               account_circle
             </span>
@@ -336,9 +343,190 @@
         </div>
       </div>
 
+      <!-- Toy category -->
+      <div class="items-container">
+        <div class="container-head">Best Of Toys</div>
+        <!-- all cards container  -->
+        <div class="container-cards">
+          <div class="card">
+            <img src="images/toy-pic1.webp" alt="item1" />
+            <span class="item-name">Item 1 </span>
+            <span class="item-price">From &#8377;1000</span>
+          </div>
+          <div class="card">
+            <img src="images/toy-pic2.webp" alt="item1" />
+            <span class="item-name">Item 2 </span>
+            <span class="item-price">From &#8377;1000</span>
+          </div>
+          <div class="card">
+            <img src="images/toy-pic3.webp" alt="item1" />
+            <span class="item-name">Item 3 </span>
+            <span class="item-price">From &#8377;1000</span>
+          </div>
+          <div class="card">
+            <img src="images/toy-pic4.webp" alt="item1" />
+            <span class="item-name">Item 4 </span>
+            <span class="item-price">From &#8377;1000</span>
+          </div>
+          <div class="card">
+            <img src="images/toy-pic5.webp" alt="item1" />
+            <span class="item-name">Item 5 </span>
+            <span class="item-price">From &#8377;1000</span>
+          </div>
+          <div class="card">
+            <img src="images/toy-pic6.webp" alt="item1" />
+            <span class="item-name">Item 6 </span>
+            <span class="item-price">From &#8377;1000</span>
+          </div>
+          <div class="card">
+            <img src="images/toy-pic7.webp" alt="item1" />
+            <span class="item-name">Item 7 </span>
+            <span class="item-price">From &#8377;1000</span>
+          </div>
+          <div class="card">
+            <img src="images/toy-pic8.webp" alt="item1" />
+            <span class="item-name">Item 8 </span>
+            <span class="item-price">From &#8377;1000</span>
+          </div>
+          <div class="card">
+            <img src="images/toy-pic9.webp" alt="item1" />
+            <span class="item-name">Item 9 </span>
+            <span class="item-price">From &#8377;1000</span>
+          </div>
+          <!-- next button of crousel -->
+        </div>
+        <div class="nextbtn" onclick="nextSlide()">
+          <i class="arrowbtn rightbtn"></i>
+        </div>
+
+        <div class="prevbtn" onclick="prevSlide()">
+          <i class="arrowbtn leftbtn"></i>
+        </div>
+      </div>
+
       <!-- footer  -->
       <div class="footer-container">
-        
+        <!-- upper Footer  -->
+        <div class="upper-footer">
+          <!-- about  -->
+          <div class="footer-sub left-upper-footer">
+            <span class="footer-sub-head">ABOUT</span>
+            <div class="footer-sub-desc">
+              <a href="#">Contact Us</a>
+              <a href="#">About Us</a>
+              <a href="#">Careers</a>
+              <a href="#">Flipkart Stories</a>
+              <a href="#">Press</a>
+              <a href="#">Flipkart Wholesales</a>
+              <a href="#">Cleartrip</a>
+              <a href="#">Corporate Information</a>
+            </div>
+          </div>
+          <!-- help  -->
+          <div class="footer-sub left-upper-footer">
+            <span class="footer-sub-head">HELP</span>
+            <div class="footer-sub-desc">
+              <a href="#">Payments</a>
+              <a href="#">Shipping</a>
+              <a href="#">Cancellation & Returns</a>
+              <a href="#">FAQ</a>
+              <a href="#">Report Infringement</a>
+            </div>
+          </div>
+          <!-- Consumer Policy  -->
+          <div class="footer-sub left-upper-footer">
+            <span class="footer-sub-head">CONSUMER POLICY</span>
+            <div class="footer-sub-desc">
+              <a href="#">Cancellation & Returns</a>
+              <a href="#">Terms Of Use</a>
+              <a href="#">Security</a>
+              <a href="#">Privacy</a>
+              <a href="#">Grievance Redressal</a>
+              <a href="#">EPR Compliance</a>
+            </div>
+          </div>
+          <!-- Social  -->
+          <div class="footer-sub left-upper-footer">
+            <span class="footer-sub-head">SOCIAL</span>
+            <div class="footer-sub-desc">
+              <a href="#">Facebook</a>
+              <a href="#">Twitter</a>
+              <a href="#">YouTube</a>
+            </div>
+          </div>
+          <!-- line  -->
+          <div class="vline"></div>
+          <!-- Social  -->
+          <div class="footer-sub right-upper-footer">
+            <span class="footer-sub-head">Mail Us:</span>
+            <div class="footer-sub-desc">
+              <span>Flipkart Internet Private Limited, </span>
+              <span> Buildings Alyssa, Begonia & </span>
+              <span> Clove Embassy Tech Village, </span>
+              <span> Outer Ring Road, Devarabeesanahalli Village, </span>
+              <span> Bengaluru, 560103, </span>
+              <span> Karnataka, India </span>
+            </div>
+          </div>
+          <!-- Registered Office Address  -->
+          <div class="footer-sub right-upper-footer">
+            <span class="footer-sub-head">Registered Office Address:</span>
+            <div class="footer-sub-desc">
+              <span>Flipkart Internet Private Limited, </span>
+              <span> Buildings Alyssa, Begonia & </span>
+              <span> Clove Embassy Tech Village, </span>
+              <span> Outer Ring Road, Devarabeesanahalli Village, </span>
+              <span> Bengaluru, 560103, </span>
+              <span> Karnataka, India </span>
+            </div>
+          </div>
+        </div>
+        <!-- Lower Footer  -->
+        <div class="hline"></div>
+        <div class="lower-footer">
+          <div class="footer-item-container">
+            <img
+              src="images/icons/seller-icon2.svg"
+              alt="Become a Seller"
+              width="13px"
+            />
+            <span>Become a Seller</span>
+          </div>
+          <div class="footer-item-container">
+            <img
+              src="images/icons/advertise-icon2.svg"
+              alt="advertise"
+              width="13px"
+            />
+            <span>Advertise</span>
+          </div>
+          <div class="footer-item-container">
+            <img
+              src="images/icons/giftCard-icon2.svg"
+              alt="Gift Cards"
+              width="13px"
+            />
+            <span>Gift Cards</span>
+          </div>
+          <div class="footer-item-container">
+            <img
+              src="images/icons/help-icon2.svg"
+              alt="Help center"
+              width="13px"
+            />
+            <span>Help Center</span>
+          </div>
+          <div class="footer-item-container">
+            <span>&#169;</span>
+            <span>2007-2024 Flipkart.com</span>
+          </div>
+          <div class="footer-item-container">
+            <img
+              src="images/icons/payment-method-pic.svg"
+              alt="payment methods"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </body>

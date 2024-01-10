@@ -1,1 +1,1 @@
-Flipkart clone: 
+Responsive Flipkart clone:
