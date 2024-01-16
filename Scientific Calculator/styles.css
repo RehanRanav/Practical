@@ -80,8 +80,15 @@
   font-weight: bold;
   font-size: 14px;
 }
-/* .equal {
-  background-image: linear-gradient(to bottom, #ffffff36, #4a3c33);
+.equal,
+.backspace,
+.clear {
+  background-image: linear-gradient(to bottom, #ffffff 0.3%, 2%,#eb6912 100%);
   font-weight: bold;
   font-size: 14px;
-} */
+}
+.arithmetic{
+    background-image: linear-gradient(to bottom, #6b7478 0.3%,2%,#4a3c33 100%);
+    font-weight: bold;
+    font-size: 14px;
+}
