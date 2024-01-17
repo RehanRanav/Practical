@@ -14,7 +14,8 @@
 .calculator {
   border: 5px solid black;
   height: fit-content;
-  width: 50vh;
+  width: 55vh;
+  max-width: fit-content;
   margin: 10px;
   box-sizing: border-box;
   padding: 5px;
@@ -32,6 +33,9 @@
   border-radius: 5px;
   outline: none;
   background-image: linear-gradient(to bottom, #ffffff, #babea2);
+  text-align: end;
+  caret-color: transparent;
+  overflow: scroll;
 }
 .btn-container {
   display: grid;
@@ -49,6 +53,11 @@
   border-radius: 3px;
   text-align: center;
   box-sizing: border-box;
+  cursor: pointer;
+}
+.btn:hover{
+  background-image: none;
+  background-color: #4b5255;
 }
 .option-container {
   display: flex;
@@ -80,6 +89,10 @@
   font-weight: bold;
   font-size: 14px;
 }
+.digits:hover{
+  background-image: none;
+  background-color: #6b7478;
+}
 .equal,
 .backspace,
 .clear {
@@ -87,8 +100,28 @@
   font-weight: bold;
   font-size: 14px;
 }
+.equal:hover,
+.backspace:hover,
+.clear:hover {
+  background-image: none;
+  background-color: #eb6912;
+}
 .arithmetic{
     background-image: linear-gradient(to bottom, #6b7478 0.3%,2%,#4a3c33 100%);
     font-weight: bold;
     font-size: 14px;
+}
+.arithmetic:hover{
+  background-image: none;
+  background-color: #4a3c33;
+}
+
+.list2{
+  display: none;
+}
+.deactive{
+  display: none;
+}
+.active{
+  display: block;
 }
