@@ -5,6 +5,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const toggle_btn = document.getElementById("change-list-btn");
     const list1 = document.querySelectorAll(".list1");
     const list2 = document.querySelectorAll(".list2");
+    const degreebtn = document.querySelector(".degreebtn");
+    const trigonometry = document.querySelector(".trigonometry");
+    const trigonometry_options = document.querySelector(".trigonometry-options");
+    const functionsbtn = document.querySelector(".functions");
+    const functions_options = document.querySelector(".functions-options");
+    const change_trigonometry = document.querySelector(".change-option");
+    const options = document.querySelectorAll(".option-btn");
+    const hyperbolic = document.querySelector(".change-to-inverse");
 
     //restrict string charaters in input field
     output.addEventListener('input', function (event) {
@@ -23,6 +31,16 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
         }
     });
+    document.addEventListener('keydown', function (event) {
+        output.setSelectionRange(output.value.length, output.value.length);
+        output.focus();
+    })
+
+    document.addEventListener('keyup', function (event) {
+        if(event.key === 'Enter') {
+            show();
+        }
+    });
 
     //toggle between button list
     toggle_btn.addEventListener('click', function () {
@@ -35,12 +53,57 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    degreebtn.addEventListener('click', function () {
+        let btn_content = degreebtn.innerHTML;
+        if (btn_content === "DEG") {
+            degreebtn.innerHTML = "RAD";
+        } else {
+            degreebtn.innerHTML = "DEG";
+        }
+    });
+
+    trigonometry.addEventListener('click', function () {
+        trigonometry_options.classList.toggle("active-option");
+    });
+
+    functionsbtn.addEventListener('click', function () {
+        functions_options.classList.toggle("active-option");
+    });
+
+    change_trigonometry.addEventListener('click', function (event) {
+        options.forEach(function (item) {
+            let btn_content = item.innerHTML;
+            if (!btn_content.includes('h')) {
+                btn_content = btn_content.replace(/\w\w\w/, function (match) {
+                    return match + 'h';
+                });
+            } else {
+                btn_content = btn_content.replace(new RegExp('h', 'g'), '');
+            }
+            item.innerHTML = btn_content;
+        });
+        event.stopPropagation();
+    });
+
+    hyperbolic.addEventListener('click', function (event) {
+        options.forEach(function (item) {
+            let btn_content = item.innerHTML;
+            if (!btn_content.includes(`-1`)) {
+                btn_content += `<sup>-1</sup>`;
+            } else {
+                btn_content = btn_content.replace(new RegExp('-1', 'g'), '');
+            }
+            item.innerHTML = btn_content;
+        });
+        event.stopPropagation();
+    });
+
 });
 
 let backspace = () => {
     let result = output.value;
 
-    if (!result || result === "ERROR!" || output.value === "NaN" || output.value === "undefined") {
+    if (!result || result === "ERROR!" || output.value === "NaN" || output.value === "undefined" || output.value === "Infinity") {
         clearInput();
     }
     else {
@@ -53,7 +116,8 @@ let clearInput = () => {
 }
 
 let print_value = (val) => {
-    if (output.value === "ERROR!" || output.value === `0` || output.value === "NaN" || output.value === "undefined") {
+    if (output.value === "ERROR!" || output.value === `0` || output.value === "Infinity"|| output.value === "NaN" || output.value === "undefined") {
+        console.log(output.value);
         clearInput();
     }
     output.value += val;
@@ -64,8 +128,8 @@ let show = () => {
     let result = output.value;
 
     //set to 0 when undefined and error
-    if (!result || result === "ERROR!" || result === "undefined") {
-        output.value = `0`;
+    if (!result || result === "ERROR!" || result === "undefined" || result === "Infinity" || result === "NaN") {
+        output.value = ``;
     }
 
     if (result.includes(`log10(`)) {
@@ -88,8 +152,8 @@ let show = () => {
         output.value = result;
     }
 
-    if(result.includes(`+e0`)){
-        result = find_force_exponential(result);
+    if (result.includes(`+e0`)) {
+        result = find_fixed_decimal(result);
         output.value = result;
     }
 
@@ -161,16 +225,17 @@ function find_log10(val) {
 
     try {
         let ans = result.replace(/log10\((\d+)\)/g, function (match, x) {
-            const log10Result = Math.log10(Number(x));
+            const log10Result = Math.log10(Number(x)); 
             return log10Result.toString();
         })
+        console.log(ans,result);
         if (result === ans) {
             throw new Error(`Invalid`)
         }
         return ans;
 
     } catch (e) {
-        output.value = `0`;
+        output.value = `ERROR!`;
     }
 }
 
@@ -187,7 +252,7 @@ function find_logyx(val) {
         return ans;
 
     } catch (e) {
-        output.value = `0`;
+        output.value = `ERROR!`;
     }
 }
 
@@ -205,7 +270,7 @@ function find_loge(val) {
         return ans;
 
     } catch (e) {
-        output.value = `0`;
+        output.value = `ERROR!`;
     }
 }
 
@@ -223,16 +288,16 @@ function find_exponential(val) {
         return ans;
 
     } catch (e) {
-        output.value = `0`;
+        output.value = `ERROR!`;
     }
 }
 
-function find_force_exponential(val){
+function find_fixed_decimal(val) {
     let result = val;
 
     try {
-        let ans = result.replace(/(\d+\.\d+)\+e(\d+)/g, function (match, x , y) {
-            const F_E_Result = Number(x)*(Math.pow(10,Number(y)));
+        let ans = result.replace(/(\d+\.\d+)\+e(\d+)/g, function (match, x, y) {
+            const F_E_Result = Number(x) * (Math.pow(10, Number(y)));
             return F_E_Result.toString();
         })
         if (result === ans) {
@@ -241,7 +306,7 @@ function find_force_exponential(val){
         return ans;
 
     } catch (e) {
-        output.value = `0`;
+        output.value = `ERROR!`;
     }
 }
 
@@ -313,7 +378,7 @@ let find_power = (val) => {
         let ans = Math.pow(result, val);
         output.value = ans.toString();
     } catch (e) {
-        output.value = `0`;
+        output.value = `ERROR!`;
     }
 }
 
@@ -326,7 +391,57 @@ let find_base = (val) => {
         let ans = Math.pow(val, Number(result));
         output.value = ans;
     } catch (e) {
-        output.value = `0`;
+        output.value = `ERROR!`;
+    }
+}
+
+let find_degree_radian = () => {
+    let result = output.value;
+    let btn_content = document.querySelector('.degreebtn').innerHTML;
+    console.log(btn_content);
+    try {
+        if (isNaN(result)) {
+            throw new Error("Invalid expression");
+        }
+        if (btn_content === 'DEG') {
+            let radian = Number(result) * Math.PI / 180;
+            output.value = radian;
+        } else {
+            let degree = Number(result) * 180 / Math.PI;
+            output.value = degree;
+        }
+    } catch (e) {
+        output.value = `ERROR!`;
+    }
+}
+
+let find_random = () => {
+    output.value = Math.random();
+}
+
+let find_floor = () => {
+    let result = output.value;
+    try {
+        if (isNaN(result)) {
+            throw new Error("Invalid expression");
+        }
+        output.value = Math.floor(result);
+
+    } catch (e) {
+        output.value = `ERROR!`;
+    }
+}
+
+let find_ceil = () => {
+    let result = output.value;
+    try {
+        if (isNaN(result)) {
+            throw new Error("Invalid expression");
+        }
+        output.value = Math.ceil(result);
+
+    } catch (e) {
+        output.value = `ERROR!`;
     }
 }
 
@@ -361,5 +476,82 @@ let memory_operation = (val) => {
         case `clear`:
             localStorage.removeItem('CalculatorMemory');
             break;
+    }
+}
+
+let trigonometry_operation = (val) => {
+    let result = parseFloat(output.value);
+    let btn_content = document.querySelector(".option-btn").innerHTML;
+    btn_content = btn_content.toString();
+
+    switch (val) {
+        case `sin`:
+            if (btn_content.includes(`h`) && btn_content.includes(`-1`)) {
+                output.value = Math.asinh(result);
+            } else if (btn_content.includes(`-1`)) {
+                console.log(btn_content);
+                output.value = Math.asin(result);
+            } else if (btn_content.includes(`h`)) {
+                output.value = Math.sinh(result);
+            } else {
+                output.value = Math.sin(result);
+            }
+            break;
+        case 'cos':
+            if (btn_content.includes(`h`) && btn_content.includes(`-1`)) {
+                output.value = Math.acosh(result);
+            } else if (btn_content.includes(`-1`)) {
+                output.value = Math.acos(result);
+            } else if (btn_content.includes(`h`)) {
+                output.value = Math.cosh(result);
+            } else {
+                output.value = Math.cos(result);
+            }
+            break;
+        case 'tan':
+            if (btn_content.includes(`h`) && btn_content.includes(`-1`)) {
+                output.value = Math.atanh(result);
+            } else if (btn_content.includes(`-1`)) {
+                output.value = Math.atan(result);
+            } else if (btn_content.includes(`h`)) {
+                output.value = Math.tanh(result);
+            } else {
+                output.value = Math.tan(result);
+            }
+            break;
+        case 'csc':
+            if (btn_content.includes(`h`) && btn_content.includes(`-1`)) {
+                output.value = 1 / Math.asinh(result);
+            } else if (btn_content.includes(`-1`)) {
+                output.value = 1 / Math.asin(result);
+            } else if (btn_content.includes(`h`)) {
+                output.value = 1 / Math.sinh(result);
+            } else {
+                output.value = 1 / Math.sin(result);
+            }
+            break;
+        case 'sec':
+            if (btn_content.includes(`h`) && btn_content.includes(`-1`)) {
+                output.value = 1 / Math.acosh(result);
+            } else if (btn_content.includes(`-1`)) {
+                output.value = 1 / Math.acos(result);
+            } else if (btn_content.includes(`h`)) {
+                output.value = 1 / Math.cosh(result);
+            } else {
+                output.value = 1 / Math.cos(result);
+            }
+            break;
+        case 'cot':
+            if (btn_content.includes(`h`) && btn_content.includes(`-1`)) {
+                output.value = 1 / Math.atanh(result);
+            } else if (btn_content.includes(`-1`)) {
+                output.value = 1 / Math.atan(result);
+            } else if (btn_content.includes(`h`)) {
+                output.value = 1 / Math.tanh(result);
+            } else {
+                output.value = 1 / Math.tan(result);
+            }
+            break;
+
     }
 }
