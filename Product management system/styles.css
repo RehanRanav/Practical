@@ -1,0 +1,88 @@
+body {
+    background: #3B7197;
+}
+
+.searchbar {
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgb(255, 255, 255);
+}
+
+.searchbar input {
+    border: none;
+    outline: none;
+    margin-left: 10px;
+    width: 90%;
+}
+
+.addProductSec .btn {
+    background: #00aeff;
+    color: #fff;
+}
+
+.addProductSec,
+.viewProductSection {
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(198, 198, 198);
+    box-shadow: rgba(255, 255, 255, 0.25) 0px 54px 55px, rgba(255, 255, 255, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    border-radius: 5px;
+}
+
+.bi-arrow-down-up {
+    color: black;
+}
+
+.viewProductSection {
+    height: 70vh;
+}
+
+.viewProductSection h3 {
+    color: #4A8DB7;
+}
+
+th {
+    color: #4A8DB7;
+}
+
+/* Hide the spin button in priceInput */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+
+.addProductSec .btn:hover {
+    background: black;
+    color: #fff;
+}
+
+.viewProductSection .tbody {
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.delBtn {
+    display: none;
+}
+
+tr:hover .delBtn {
+    display: inline-block;
+}
+
+
+#viewImage {
+    height: 30%;
+    display: flex;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 992px) {
+    .delBtn{
+        display: inline-block;
+    }
+}
