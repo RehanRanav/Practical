@@ -1,0 +1,164 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+#container {
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
+.calculator {
+  border: 5px solid black;
+  height: fit-content;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 5px;
+  font-family: "Roboto", sans-serif;
+  background-color: #141414e2;
+  color: #ffffff;
+  border-radius: 8px;
+}
+#resultbar {
+  width: 100%;
+  height: 60px;
+  margin-bottom: 15px;
+  font-size: 28px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background-image: linear-gradient(to bottom, #ffffff, #babea2);
+  text-align: end;
+  caret-color: transparent;
+  overflow: scroll;
+}
+.btn-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+.btn {
+  height: 40px;
+  max-width: 50px;
+  border: none;
+  background-image: linear-gradient(to bottom, #6b7478, #4b5255);
+  color: #ffffff;
+  padding: 8px;
+  margin: 5px;
+  font-size: 12px;
+  border-radius: 3px;
+  text-align: center;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.btn:hover{
+  background-image: none;
+  background-color: #4b5255;
+}
+.option-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.trigonometry,
+.functions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 6px;
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+  position: relative;
+}
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #ffffff;
+}
+.trigonometry-options{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: #2f2f2f;
+  border-radius: 3px;
+  position: absolute;
+  top: 39px;
+  z-index: 2;
+  padding: 1px;
+  border: 2px solid #6b7478;
+  border-radius: 3px;
+  display: none;
+}
+.functions-options{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  background-color: #2f2f2f;
+  border-radius: 3px;
+  position: absolute;
+  top: 39px;
+  left: -1;
+  right: 0;
+  z-index: 2;
+  padding: 1px;
+  border: 2px solid #6b7478;
+  border-radius: 3px;
+  display: none;
+}
+.option-btn{
+  height: 40px;
+  width: 90px;
+  padding: 4px;
+  font-size: 11px;
+}
+.slace {
+  font-size: 20px;
+}
+.digits {
+  background-image: linear-gradient(to bottom, #6b7478 1%, #000000);
+  font-weight: bold;
+  font-size: 14px;
+}
+.digits:hover{
+  background-image: none;
+  background-color: #6b7478;
+}
+.equal,
+.backspace,
+.clear {
+  background-image: linear-gradient(to bottom, #ffffff 0.3%, 2%,#eb6912 100%);
+  font-weight: bold;
+  font-size: 14px;
+}
+.equal:hover,
+.backspace:hover,
+.clear:hover {
+  background-image: none;
+  background-color: #eb6912;
+}
+.arithmetic{
+    background-image: linear-gradient(to bottom, #6b7478 0.3%,2%,#4a3c33 100%);
+    font-weight: bold;
+    font-size: 14px;
+}
+.arithmetic:hover{
+  background-image: none;
+  background-color: #4a3c33;
+}
+
+.list2{
+  display: none;
+}
+.deactive{
+  display: none;
+}
+.active{
+  display: block;
+}
+.active-option{
+  display: grid;
+}
