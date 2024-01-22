@@ -3,14 +3,25 @@ let inputDescription = document.getElementById('inputDescription');
 let inputPrice = document.getElementById('inputPrice');
 let inputImage = document.getElementById('inputImage');
 let productData = document.getElementById('productData');
-let emptyProductList = document.getElementById('emptyProductList');
+let emptyProductList = document.querySelector('.emptyProductList');
 let products = [];
 
+if (localStorage.getItem('addProduct') != null) {
+    products = JSON.parse(localStorage.getItem('addProduct'));
+}
+
+const clearList = () => {
+    if (confirm('Are you sure you want to delete all products?')) {
+        localStorage.clear();
+        window.location.reload();
+    }
+}
+
 let clearInputs = () => {
-    inputName.value = '';   
-    inputDescription.value = '';   
-    inputPrice.value = '';   
-    inputImage.value = '';   
+    inputName.value = '';
+    inputDescription.value = '';
+    inputPrice.value = '';
+    inputImage.value = '';
 }
 
 let success = true;
@@ -85,7 +96,7 @@ const addProduct = () => {
 
             try {
                 localStorage.setItem('addProduct', JSON.stringify(products));
-                // getProduct();
+                getProduct();
             } catch (err) {
                 alert("Storage full!! Please remove some products from your List.");
                 return;
@@ -106,11 +117,12 @@ const addProduct = () => {
 
 const noProducts = () => {
     if (products.length === 0) {
+        const imageSrc = './img/noProduct.webp';
+
         emptyProductList.innerHTML += `
         <div>
-        <img src="img/noProduct.webp" width="40%" height="auto" alt="">
-                    
-            <h2><strong>No Product Data to show</strong></h2> 
+        <img src="${imageSrc}" width="40%" height="auto" alt="" />
+        <h2><strong>No Product Data to show</strong></h2> 
         </div>`;
     }
     else {
@@ -122,6 +134,7 @@ const getProduct = () => {
     noProducts()
     productData.innerHTML = "";
     products.forEach((data, index) => {
+        console.log(data);
         productData.innerHTML += `
         <tr>
             <td scope="row">${index + 1}</td>
@@ -145,5 +158,53 @@ const getProduct = () => {
         </tr>`
     });
 }
+
+const deleteProduct = (index) => {
+    if (confirm('Are you sure you want to delete?')) {
+        products.splice(index, 1);
+        localStorage.setItem('addProduct', JSON.stringify(products));
+
+        const toastLiveExample = document.getElementById('liveToast')
+        const toast = new bootstrap.Toast(toastLiveExample)
+        document.getElementById('toastMessage').innerHTML = "Product Deleted successfully!!!";
+        toast.show()
+        getProduct();
+    } else {
+        return;
+    }
+}
+
+const table = document.getElementById("displayTable");
+const filterData = () => {
+    const input = document.getElementById("sortInput");
+    const filter = input.value.toUpperCase();
+    const tr = table.querySelectorAll("tr");
+    console.log(tr);
+
+    for (i = 0; i < tr.length; i++) {
+        let td = tr[i].querySelectorAll("td")[1];
+        console.log(td);
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+function debounceFunc(fn, delay) {
+    let timer;
+    return function () {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            fn();
+        }, delay);
+    }
+
+}
+const searchProduct = debounceFunc(filterData, 800);
 
 getProduct();
