@@ -82,7 +82,10 @@ const addProduct = () => {
         alert('Please select image');
         return;
     }
-
+    if ((pImage.size / (1024 * 1024)) > 1) {
+        alert('Size Of Image must less than 1 Mb');
+        return;
+    }
     compressImage(pImage, (compressedBlob) => {
         const compressedReader = new FileReader();
 
@@ -186,6 +189,10 @@ function updateData(index) {
         products[index].pDescription = pDescription;
         products[index].pPrice = pPrice;
         if (pImage) {
+            if ((pImage.size / (1024 * 1024)) > 1) {
+                alert('Size Of Image must less than 1 Mb');
+                return;
+            }
             compressImage(pImage, (compressedBlob) => {
                 const compressedReader = new FileReader();
 
