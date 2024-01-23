@@ -1,7 +1,13 @@
 body {
     background: #3B7197;
 }
-
+.text-danger{
+    display: none;
+}
+.text-update-danger{
+    display: none;
+    color: red;
+}
 .searchbar {
     display: flex;
     align-items: center;

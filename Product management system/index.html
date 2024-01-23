@@ -6,11 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CRUD Operation in JS</title>
 
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="img/logo.png"
-    />
+    <link rel="icon" type="image/x-icon" href="img/logo.png" />
 
     <!-- Bootstrap CSS -->
     <link
@@ -183,6 +179,7 @@
                 Product Information
               </h1>
             </div>
+
             <div class="modal-body">
               <form id="addProductForm">
                 <div class="row mb-3">
@@ -192,6 +189,7 @@
                   <div class="col-sm-9">
                     <input type="text" class="form-control" id="inputName" />
                   </div>
+                  <div class="text-danger"></div>
                 </div>
                 <div class="row mb-3">
                   <label for="inputDescription" class="col-sm-3 col-form-label"
@@ -204,6 +202,7 @@
                       rows="3"
                     ></textarea>
                   </div>
+                  <div class="text-danger"></div>
                 </div>
                 <div class="row mb-3">
                   <label for="inputPrice" class="col-sm-3 col-form-label"
@@ -212,11 +211,11 @@
                   <div class="col-sm-9">
                     <input
                       type="number"
-                      onkeydown="return event.keyCode !== 69 && event.keyCode !== 109 && event.keyCode !== 189 && event.keyCode !== 187 && event.keyCode !== 107"
                       class="form-control"
                       id="inputPrice"
                     />
                   </div>
+                  <div class="text-danger"></div>
                 </div>
                 <div class="row mb-3">
                   <label for="inputImage" class="col-sm-3 col-form-label"
@@ -230,6 +229,7 @@
                       accept="image/x-png,image/gif,image/jpeg"
                     />
                   </div>
+                  <div class="text-danger"></div>
                 </div>
               </form>
             </div>
@@ -281,6 +281,7 @@
                   <div class="col-sm-9">
                     <input type="text" class="form-control" id="updateName" />
                   </div>
+                  <div class="text-update-danger"></div>
                 </div>
                 <div class="row mb-3">
                   <label for="inputDescription" class="col-sm-3 col-form-label"
@@ -293,6 +294,7 @@
                       rows="3"
                     ></textarea>
                   </div>
+                  <div class="text-update-danger"></div>
                 </div>
                 <div class="row mb-3">
                   <label for="inputPrice" class="col-sm-3 col-form-label"
@@ -301,11 +303,11 @@
                   <div class="col-sm-9">
                     <input
                       type="number"
-                      onkeydown="return event.keyCode !== 69 && event.keyCode !== 109 && event.keyCode !== 189 && event.keyCode !== 187 && event.keyCode !== 107"
                       class="form-control"
                       id="updatePrice"
                     />
                   </div>
+                  <div class="text-update-danger"></div>
                 </div>
                 <div class="row mb-3">
                   <label for="inputImage" class="col-sm-3 col-form-label"

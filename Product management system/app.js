@@ -23,6 +23,12 @@ let clearInputs = () => {
     inputDescription.value = '';
     inputPrice.value = '';
     inputImage.value = '';
+    const alert = document.querySelectorAll('.text-danger');
+
+    alert.forEach((item) => {
+        item.style.display = 'none';
+    });
+
 }
 
 let success = true;
@@ -61,27 +67,38 @@ const compressImage = (imgFile, callback) => {
 
 // Function to add product
 const addProduct = () => {
-    const pName = inputName.value;
-    const pDescription = inputDescription.value;
-    const pPrice = inputPrice.value;
+    const pName = inputName.value.trim();
+    const pDescription = inputDescription.value.trim();
+    const pPrice = inputPrice.value.trim();
     const pImage = inputImage.files[0];
+    const alert = document.querySelectorAll('.text-danger');
+
+    alert.forEach((item) => {
+        item.style.display = 'none';
+    });
 
     if (!pName) {
-        alert('Please enter product name');
+        alert[0].style.display = 'block';
+        alert[0].innerHTML = "Please enter Product name";
         return;
+
     }
     if (!pDescription) {
-        alert('Please enter product description');
+        alert[1].style.display = 'block';
+        alert[1].innerHTML = "Please enter Product description";
         return;
     }
     if (!pPrice) {
-        alert('Please enter product price');
+        alert[2].style.display = 'block';
+        alert[2].innerHTML = "Please enter Product price";
         return;
     }
     if (!pImage) {
-        alert('Please select image');
+        alert[3].style.display = 'block';
+        alert[3].innerHTML = "Please select Product Image";
         return;
     }
+
     if ((pImage.size / (1024 * 1024)) > 1) {
         alert('Size Of Image must less than 1 Mb');
         return;
@@ -117,6 +134,11 @@ const addProduct = () => {
         compressedReader.readAsDataURL(compressedBlob);
     });
 };
+
+document.querySelector('#closeAddBtn').addEventListener('click', () => {
+    console.log("close");
+    clearInputs();
+});
 
 const noProducts = () => {
     if (products.length === 0) {
@@ -177,12 +199,34 @@ let productInfo = (index) => {
 }
 
 function updateData(index) {
-    const pName = document.getElementById('updateName').value;
-    const pDescription = document.getElementById('updateDescription').value;
-    const pPrice = document.getElementById('updatePrice').value;
+    const pName = document.getElementById('updateName').value.trim();
+    const pDescription = document.getElementById('updateDescription').value.trim();
+    const pPrice = document.getElementById('updatePrice').value.trim();
     const pImage = document.getElementById('updateImage').files[0];
     if (pName === "" || pDescription === "" || pPrice === "") {
-        alert('Please enter value for product');
+        const alert = document.querySelectorAll('.text-update-danger');
+
+        alert.forEach((item) => {
+            item.style.display = 'none';
+        });
+
+        if (!pName) {
+            alert[0].style.display = 'block';
+            alert[0].innerHTML = "Please enter Product name";
+            return;
+
+        }
+        if (!pDescription) {
+            alert[1].style.display = 'block';
+            alert[1].innerHTML = "Please enter Product description";
+            return;
+        }
+        if (!pPrice) {
+            alert[2].style.display = 'block';
+            alert[2].innerHTML = "Please enter Product price";
+            return;
+        }
+
         return 0;
     } else {
         products[index].pName = pName;
@@ -215,6 +259,14 @@ function updateData(index) {
     }
     document.querySelector('#closeBtn').click();
 }
+
+document.querySelector('#closeBtn').addEventListener('click', () => {
+    const alert = document.querySelectorAll('.text-update-danger');
+
+    alert.forEach((item) => {
+        item.style.display = 'none';
+    });
+});
 
 const deleteProduct = (index) => {
     if (confirm('Are you sure you want to delete?')) {
@@ -257,6 +309,7 @@ function debounceFunc(fn, delay) {
     return function () {
         clearTimeout(timer);
         timer = setTimeout(() => {
+            console.log("debounced");
             fn();
         }, delay);
     }
