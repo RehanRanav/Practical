@@ -4,6 +4,7 @@ let inputPrice = document.getElementById('inputPrice');
 let inputImage = document.getElementById('inputImage');
 let productData = document.getElementById('productData');
 let emptyProductList = document.querySelector('.emptyProductList');
+let updateBtn = document.getElementById('updateBtn');
 let products = [];
 
 if (localStorage.getItem('addProduct') != null) {
@@ -110,7 +111,6 @@ const addProduct = () => {
             clearInputs();
             document.querySelector('#closeAddBtn').click();
         });
-
         compressedReader.readAsDataURL(compressedBlob);
     });
 };
@@ -133,11 +133,11 @@ const noProducts = () => {
 const getProduct = () => {
     noProducts()
     productData.innerHTML = "";
+    let len = products.length;
     products.forEach((data, index) => {
-        console.log(data);
         productData.innerHTML += `
         <tr>
-            <td scope="row">${index + 1}</td>
+            <td scope="row" id="indexCol">${index + 1}</td>
             <td class="nameCol">${data.pName}</td>
             <td class="descCol">${data.pDescription}</td>
             <td class="priceCol">${data.pPrice}</td>
@@ -156,7 +156,57 @@ const getProduct = () => {
                 </button>
             </td>
         </tr>`
+        len = len - 1;
     });
+}
+
+let productInfo = (index) => {
+    console.log(products, index);
+    document.getElementById('updateName').value = products[index].pName;
+    document.getElementById('updateDescription').value = products[index].pDescription;
+    document.getElementById('updatePrice').value = products[index].pPrice;
+    document.getElementById('updateImage').value = "";
+    document.getElementById('viewImage').innerHTML = `<img src="${products[index].pImage}" class="img img-fluid"></img>`;
+
+    document.getElementById('updateBtn').onclick = () => {
+        updateData(index);
+    }
+}
+
+function updateData(index) {
+    const pName = document.getElementById('updateName').value;
+    const pDescription = document.getElementById('updateDescription').value;
+    const pPrice = document.getElementById('updatePrice').value;
+    const pImage = document.getElementById('updateImage').files[0];
+    if (pName === "" || pDescription === "" || pPrice === "") {
+        alert('Please enter value for product');
+        return 0;
+    } else {
+        products[index].pName = pName;
+        products[index].pDescription = pDescription;
+        products[index].pPrice = pPrice;
+        if (pImage) {
+            compressImage(pImage, (compressedBlob) => {
+                const compressedReader = new FileReader();
+
+                compressedReader.addEventListener('load', () => {
+                    const compressedImageData = compressedReader.result;
+                    products[index].pImage = compressedImageData;
+                    localStorage.setItem('addProduct', JSON.stringify(products));
+                    getProduct();
+                });
+
+                compressedReader.readAsDataURL(compressedBlob);
+            });
+        }
+        localStorage.setItem('addProduct', JSON.stringify(products));
+        getProduct();
+        const toastLiveExample = document.getElementById('liveToast')
+        const toast = new bootstrap.Toast(toastLiveExample)
+        document.getElementById('toastMessage').innerHTML = "Product Updated successfully!!!";
+        toast.show()
+    }
+    document.querySelector('#closeBtn').click();
 }
 
 const deleteProduct = (index) => {
@@ -206,5 +256,58 @@ function debounceFunc(fn, delay) {
 
 }
 const searchProduct = debounceFunc(filterData, 800);
+
+const sortData = (column) => {
+    var rows, switching, i, row1, row2, shouldSwitch, dir, switchcount = 0;
+
+    switching = true;
+    dir = "asc";
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            row1 = rows[i].getElementsByTagName("td")[column];
+            row2 = rows[i + 1].getElementsByTagName("td")[column];
+
+            if (dir == "asc") {
+                if (column == 3 || column == 0) {
+                    if (Number(row1.innerHTML) > Number(row2.innerHTML)) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else {
+                    if (row1.innerHTML.toLowerCase() > row2.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            } else if (dir == "desc") {
+                if (column == 3 || column == 0) {
+                    if (Number(row1.innerHTML) < Number(row2.innerHTML)) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else {
+
+                    if (row1.innerHTML.toLowerCase() < row2.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount++;
+        } else {
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+        }
+    }
+}
 
 getProduct();
