@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //restrict string charaters in input field
     output.addEventListener('input', function (event) {
         let inputValue = event.target.value;
+
         event.target.value = inputValue.replace(/[^0-9+\-*/%.e()log]/g, "");
 
         let selectionStart = event.target.selectionStart;
@@ -37,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
     })
 
     document.addEventListener('keyup', function (event) {
-        if(event.key === 'Enter') {
+        if (event.key === 'Enter') {
             show();
         }
     });
@@ -116,7 +117,7 @@ let clearInput = () => {
 }
 
 let print_value = (val) => {
-    if (output.value === "ERROR!" || output.value === `0` || output.value === "Infinity"|| output.value === "NaN" || output.value === "undefined") {
+    if (output.value === "ERROR!" || output.value === `0` || output.value === "Infinity" || output.value === "NaN" || output.value === "undefined") {
         console.log(output.value);
         clearInput();
     }
@@ -128,7 +129,7 @@ let show = () => {
     let result = output.value;
 
     //set to 0 when undefined and error
-    if (!result || result === "ERROR!" || result === "undefined" || result === "Infinity" || result === "NaN") {
+    if (!result || result === "ERROR!" || result === "undefined" || result === "Infinity" || result === "NaN" ) {
         output.value = ``;
     }
 
@@ -177,7 +178,11 @@ let show = () => {
 function arithmetic_operation(val) {
     let result = val;
     try {
-        output.value = eval(result);
+        let ans = eval(result);
+        if (ans == "Infinity") {
+            throw new Error("Division by zero");
+        }
+        output.value = ans;
     } catch (e) {
         output.value = "ERROR!";
         console.log(e.message);
@@ -225,10 +230,10 @@ function find_log10(val) {
 
     try {
         let ans = result.replace(/log10\((\d+)\)/g, function (match, x) {
-            const log10Result = Math.log10(Number(x)); 
+            const log10Result = Math.log10(Number(x));
             return log10Result.toString();
         })
-        console.log(ans,result);
+        console.log(ans, result);
         if (result === ans) {
             throw new Error(`Invalid`)
         }
