@@ -129,7 +129,7 @@ let show = () => {
     let result = output.value;
 
     //set to 0 when undefined and error
-    if (!result || result === "ERROR!" || result === "undefined" || result === "Infinity" || result === "NaN" ) {
+    if (!result || result === "ERROR!" || result === "undefined" || result === "Infinity" || result === "NaN") {
         output.value = ``;
     }
 
@@ -158,6 +158,11 @@ let show = () => {
         output.value = result;
     }
 
+    if (result.includes(`.e+`)) {
+        result = calculate_exponent(result);
+        output.value = result;
+    }
+
     if (result.includes(`√`)) {
         result = calculate_root(result);
         output.value = result;
@@ -170,19 +175,121 @@ let show = () => {
 
     }
 
-    if (result.includes(`+`) || result.includes(`-`) || result.includes(`*`) || result.includes(`/`) || result.includes(`%`) || result.includes(`.e+`)) {
-        arithmetic_operation(result);
+    if (result.includes(`+`) || result.includes(`-`) || result.includes(`*`) || result.includes(`/`) || result.includes(`%`)) {
+        result = arithmetic_operation(result);
+        output.value = result;
     }
 }
 
 function arithmetic_operation(val) {
     let result = val;
     try {
-        let ans = eval(result);
-        if (ans == "Infinity") {
-            throw new Error("Division by zero");
+        let tokens = result.match(/(\d+(\.\d+)?)|[\+\-\*\/\(\)\%]/g);
+
+        const operators = [];
+        const values = [];
+
+        if (!tokens) {
+            throw new Error('Invalid expression');
         }
-        output.value = ans;
+
+        // Define the order of operations (precedence)
+        const precedence = {
+            '+': 1,
+            '-': 1,
+            '*': 2,
+            '/': 2,
+            '%': 2,
+        };
+
+        tokens.forEach(token => {
+            if (/\d+(\.\d+)?/.test(token)) {
+                // If the token is a number, push it to the values stack
+                values.push(parseFloat(token));
+            } else if (token === '(') {
+                // If the token is an opening parenthesis, push it to the operators stack
+                operators.push(token);
+            } else if (token === ')') {
+                // If the token is a closing parenthesis, apply operations until an opening parenthesis is found
+                while (operators.length > 0 && operators[operators.length - 1] !== '(') {
+                    applyOperation(operators, values);
+                }
+                // Pop the opening parenthesis
+                operators.pop();
+            } else {
+                // If the token is an operator, apply operations based on precedence
+                while (
+                    operators.length > 0 &&
+                    precedence[operators[operators.length - 1]] >= precedence[token]
+                ) {
+                    applyOperation(operators, values);
+                }
+                operators.push(token);
+            }
+
+        });
+        // Apply any remaining operations
+        while (operators.length > 0) {
+            applyOperation(operators, values);
+        }
+        // The final result is the only value left in the values stack
+        if (!values[0]) {
+            return "ERROR!";
+        }
+        return values[0];
+
+
+    } catch (e) {
+        output.value = "ERROR!";
+        console.log(e.message);
+    }
+}
+
+function applyOperation(operators, values) {
+    console.log(operators, values);
+
+    try {
+        const operator = operators.pop();
+        const right = values.pop();
+        const left = values.pop();
+
+        switch (operator) {
+            case '+':
+                values.push(left + right);
+                break;
+            case '-':
+                values.push(left - right);
+                break;
+            case '*':
+                values.push(left * right);
+                break;
+            case '/':
+                values.push(left / right);
+                break;
+            case '%':
+                values.push(left % right);
+                break;
+            default:
+                throw new Error('Invalid operator');
+        }
+    } catch (e) {
+        output.value = "ERROR!";
+        console.log(e.message);
+    }
+}
+
+function calculate_exponent(val) {
+    let result = val;
+
+    try {
+        let ans = result.replace(/^(\d+(\.\d+)?)\.e\+(\d+)$/g, function (match, base, temp, exponent) {
+            console.log(base, exponent, match)
+            let expResult = Number(base) * Math.pow(10, Number(exponent));
+            return expResult.toString();
+        })
+
+        return ans;
+
     } catch (e) {
         output.value = "ERROR!";
         console.log(e.message);
